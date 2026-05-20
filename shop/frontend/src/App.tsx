@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { MainLayout } from "./components/layout/MainLayout";
+import { SidebarFilter } from "./components/SidebarFilter";
 
 type EventType = {
    id: number;
@@ -20,6 +21,9 @@ function App() {
    const [events, setEvents] = useState<EventType[]>([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const cities = [...new Set(events.map((event) => event.city))]
+   const [selectedCity, setSelectedCity] = useState('')
+   const categories = [...new Set(events.map((event) => event.category))]
 
    useEffect(() => {
       const fetchEvents = async () => {
@@ -50,7 +54,9 @@ function App() {
                   <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
                      <h2 className="mb-4 text-lg font-semibold">Filters</h2>
 
-                     <p className="text-zinc-400">Filters go here...</p>
+                     <SidebarFilter label="City" options={cities} value={selectedCity} onChange={setSelectedCity}/>
+
+                     {/* <SidebarFilter label="Category" options={categories}/> */}
                   </div>
                }
             >
@@ -59,6 +65,7 @@ function App() {
                <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8">
                   Content...
                </div>
+            
             </MainLayout>
          </div>
 
@@ -69,6 +76,7 @@ function App() {
                <p key={event.id}>{event.title}</p>
             ))}
          </div>
+
       </>
    );
 }
