@@ -3,15 +3,20 @@ import { Navbar } from "./components/Navbar";
 import { MainLayout } from "./components/layout/MainLayout";
 import { SidebarFilter } from "./components/SidebarFilter";
 import { useEvents } from "./hooks/useEvents";
+import { useVenues } from "./hooks/useVenues";
 
 function App() {
    const { events, loading, error } = useEvents();
+   const { venues } = useVenues()
 
    const cities = [...new Set(events.map((event) => event.city))];
    const [selectedCity, setSelectedCity] = useState("");
 
    const categories = [...new Set(events.map((event) => event.category))];
    const [selectedCategory, setSelectedCategory] = useState("");
+
+   const venueNames = venues.map((venue) => venue.name);
+   const [selectedVenue, setSelectedVenue] = useState("");
 
    return (
       <>
@@ -37,6 +42,13 @@ function App() {
                         value={selectedCategory}
                         onChange={setSelectedCategory}
                         allLabel="All Categories"
+                     />
+
+                     <SidebarFilter
+                        label="Venue"
+                        options={venueNames}
+                        value={selectedVenue}
+                        onChange={setSelectedVenue}
                      />
                   </div>
                }

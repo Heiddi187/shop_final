@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import type { EventType } from "../shared/types";
-import { getEvents } from "../api/getEvents";
+import type { VenueType } from "../shared/types"; 
+import { getVenues } from "../api/getVenues"; 
 
-export function useEvents() {
-   const [events, setEvents] = useState<EventType[]>([]);
+export function useVenues() {
+   const [venues, setVenues] = useState<VenueType[]>([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
 
    useEffect(() => {
-      const fetchEvents = async () => {
+      const fetchVenues = async () => {
          try {
-            const data = await getEvents();
+            const data = await getVenues();
             // console.log(data);
-            setEvents(data);
+            setVenues(data);
          } catch (err) {
             const message =
                err instanceof Error ? err.message : "Unknown Error";
@@ -21,11 +21,11 @@ export function useEvents() {
             setLoading(false);
          }
       };
-      fetchEvents();
+      fetchVenues();
    }, []);
 
    return {
-      events,
+      venues,
       loading,
       error,
    };

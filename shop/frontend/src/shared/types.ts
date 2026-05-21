@@ -11,3 +11,10 @@ export type EventType = {
    price: number;
    tix_available: number;
 };
+
+export type VenueType = {
+    id: number;
+    name: string;
+    address: string;
+    capacity: number;
+}
