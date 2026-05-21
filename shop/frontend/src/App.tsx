@@ -1,48 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { MainLayout } from "./components/layout/MainLayout";
 import { SidebarFilter } from "./components/SidebarFilter";
+import { useEvents } from "./hooks/useEvents";
 
-type EventType = {
-   id: number;
-   title: string;
-   description: string;
-   city: string;
-   category: string;
-   event_time: string;
-   event_date: string;
-   duration: number;
-   venue_id: number;
-   price: number;
-   tix_available: number;
-};
+
 
 function App() {
-   const [events, setEvents] = useState<EventType[]>([]);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
+   const { events, loading, error } = useEvents();
    const cities = [...new Set(events.map((event) => event.city))]
    const [selectedCity, setSelectedCity] = useState('')
    const categories = [...new Set(events.map((event) => event.category))]
-
-   useEffect(() => {
-      const fetchEvents = async () => {
-         try {
-            const res = await fetch("http://localhost:3000/api/events");
-            if (!res.ok) throw new Error("Failed to fetch events");
-            const data = await res.json();
-            // console.log(data);
-            setEvents(data.events);
-         } catch (err) {
-            const message =
-               err instanceof Error ? err.message : "Unknown Error";
-            setError(message);
-         } finally {
-            setLoading(false);
-         }
-      };
-      fetchEvents();
-   }, []);
 
    return (
       <>
