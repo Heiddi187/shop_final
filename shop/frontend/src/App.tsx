@@ -4,10 +4,11 @@ import { MainLayout } from "./components/layout/MainLayout";
 import { SidebarFilter } from "./components/SidebarFilter";
 import { useEvents } from "./hooks/useEvents";
 import { useVenues } from "./hooks/useVenues";
+import { EventGrid } from "./components/events/EventGrid";
 
 function App() {
-   const { events, loading, error } = useEvents();
-   const { venues } = useVenues()
+   const { events } = useEvents();
+   const { venues } = useVenues();
 
    const cities = [...new Set(events.map((event) => event.city))];
    const [selectedCity, setSelectedCity] = useState("");
@@ -17,6 +18,29 @@ function App() {
 
    const venueNames = venues.map((venue) => venue.name);
    const [selectedVenue, setSelectedVenue] = useState("");
+   const venueMap = Object.fromEntries(
+      venues.map((venue) => [venue.id, venue.name]),
+   );
+
+   const filteredEvents = events.filter((event) => {
+      const matchCity =
+         selectedCity === "" ||
+         event.city === selectedCity;
+
+      const matchCategory =
+         selectedCategory === "" || 
+         event.category === selectedCategory
+
+      const matchVenue =
+         selectedVenue === "" ||
+         venueMap[event.venue_id] === selectedVenue
+
+      return (
+         matchCity &&
+         matchCategory &&
+         matchVenue
+      )
+   })
 
    return (
       <>
@@ -55,19 +79,17 @@ function App() {
             >
                <h1 className="mb-6 text-4xl font-bold">Upcoming</h1>
 
-               <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8">
-                  Content...
-               </div>
+               <EventGrid events={filteredEvents} venueMap={venueMap} />
             </MainLayout>
          </div>
 
-         <div>
+         {/* <div>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {events.map((event) => (
                <p key={event.id}>{event.title}</p>
             ))}
-         </div>
+         </div> */}
       </>
    );
 }
