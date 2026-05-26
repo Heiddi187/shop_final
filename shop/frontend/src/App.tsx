@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { MainLayout } from "./components/layout/MainLayout";
-import { SidebarFilter } from "./components/SidebarFilter";
 import { useEvents } from "./hooks/useEvents";
 import { useVenues } from "./hooks/useVenues";
 import { EventGrid } from "./components/events/EventGrid";
+import { EventFilters } from "./components/events/EventFilters";
+import { filterEventsBySearch } from "./filters/filterEventsBySearch";
 
 function App() {
    const { events } = useEvents();
@@ -23,24 +24,23 @@ function App() {
    );
 
    const filteredEvents = events.filter((event) => {
-      const matchCity =
-         selectedCity === "" ||
-         event.city === selectedCity;
+      const matchCity = selectedCity === "" || event.city === selectedCity;
 
       const matchCategory =
-         selectedCategory === "" || 
-         event.category === selectedCategory
+         selectedCategory === "" || event.category === selectedCategory;
 
       const matchVenue =
-         selectedVenue === "" ||
-         venueMap[event.venue_id] === selectedVenue
+         selectedVenue === "" || venueMap[event.venue_id] === selectedVenue;
 
-      return (
-         matchCity &&
-         matchCategory &&
-         matchVenue
-      )
-   })
+      return matchCity && matchCategory && matchVenue;
+   });
+
+   const [searchQuery, setSearchQuery] = useState("");
+   const searchedEvents = filterEventsBySearch(
+      filteredEvents,
+      searchQuery,
+      venueMap,
+   );
 
    return (
       <>
@@ -49,47 +49,29 @@ function App() {
 
             <MainLayout
                sidebar={
-                  <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-                     <h2 className="mb-4 text-lg font-semibold">Filters</h2>
+                  <EventFilters
+                     cities={cities}
+                     categories={categories}
+                     venueNames={venueNames}
 
-                     <SidebarFilter
-                        label="City"
-                        options={cities}
-                        value={selectedCity}
-                        onChange={setSelectedCity}
-                        allLabel="All Cities"
-                     />
+                     selectedCity={selectedCity}
+                     selectedCategory={selectedCategory}
+                     selectedVenue={selectedVenue}
 
-                     <SidebarFilter
-                        label="Category"
-                        options={categories}
-                        value={selectedCategory}
-                        onChange={setSelectedCategory}
-                        allLabel="All Categories"
-                     />
-
-                     <SidebarFilter
-                        label="Venue"
-                        options={venueNames}
-                        value={selectedVenue}
-                        onChange={setSelectedVenue}
-                     />
-                  </div>
+                     setSelectedCity={setSelectedCity}
+                     setSelectedCategory={setSelectedCategory}
+                     setSelectedVenue={setSelectedVenue}
+                     
+                     searchQuery={searchQuery}
+                     setSearchQuery={setSearchQuery}
+                  />
                }
             >
                <h1 className="mb-6 text-4xl font-bold">Upcoming</h1>
 
-               <EventGrid events={filteredEvents} venueMap={venueMap} />
+               <EventGrid events={searchedEvents} venueMap={venueMap} />
             </MainLayout>
          </div>
-
-         {/* <div>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-            {events.map((event) => (
-               <p key={event.id}>{event.title}</p>
-            ))}
-         </div> */}
       </>
    );
 }
