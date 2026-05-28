@@ -1,0 +1,1 @@
+// aboutpage um hvernig síðan virkar o.s.fv.

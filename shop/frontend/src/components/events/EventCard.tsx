@@ -3,9 +3,10 @@ import type { EventType } from "../../shared/types";
 type EventCardProps = {
    event: EventType;
    venueName?: string;
+   onViewEvent: (event: EventType) => void;
 };
 
-export function EventCard({ event, venueName }: EventCardProps) {
+export function EventCard({ event, venueName, onViewEvent }: EventCardProps) {
     const formattedDate = new Date(
         event.event_date
     ).toLocaleDateString('en-GB', {
@@ -40,7 +41,10 @@ export function EventCard({ event, venueName }: EventCardProps) {
             <p className="mb-2 text-sm text-zinc-400">{formattedDate}</p>
 
             <div className="mt-auto flex items-center justify-between">
-               <button className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300">
+               <button 
+                  onClick={() => onViewEvent(event)}
+                  className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
+                  >
                   View Event
                </button>
             </div>

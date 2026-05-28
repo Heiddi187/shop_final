@@ -1,3 +1,6 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HomePage } from './pages/HomePage'
+
 import { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { MainLayout } from "./components/layout/MainLayout";
@@ -43,36 +46,18 @@ function App() {
    );
 
    return (
-      <>
-         <div className="min-h-screen bg-black text-white">
-            <Navbar />
-
-            <MainLayout
-               sidebar={
-                  <EventFilters
-                     cities={cities}
-                     categories={categories}
-                     venueNames={venueNames}
-
-                     selectedCity={selectedCity}
-                     selectedCategory={selectedCategory}
-                     selectedVenue={selectedVenue}
-
-                     setSelectedCity={setSelectedCity}
-                     setSelectedCategory={setSelectedCategory}
-                     setSelectedVenue={setSelectedVenue}
-                     
-                     searchQuery={searchQuery}
-                     setSearchQuery={setSearchQuery}
-                  />
-               }
-            >
-               <h1 className="mb-6 text-4xl font-bold">Upcoming</h1>
-
-               <EventGrid events={searchedEvents} venueMap={venueMap} />
-            </MainLayout>
-         </div>
-      </>
+      <BrowserRouter>
+         <Routes>
+            <Route 
+               path="/"
+               element={<HomePage />}
+            />
+            <Route
+               path="/about"
+               // element={<AboutPage />}
+            />
+         </Routes>
+      </BrowserRouter>
    );
 }
 
