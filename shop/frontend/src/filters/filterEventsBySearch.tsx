@@ -1,9 +1,9 @@
-import type { EventType } from "../shared/types";
+import type { EventType, VenueType } from "../shared/types";
 
 export function filterEventsBySearch(
    events: EventType[],
    searchQuery: string,
-   venueMap: Record<number, string>,
+   venueMap: Record<number, VenueType>,
 ): EventType[] {
    const q = searchQuery.trim().toLowerCase();
 
@@ -13,7 +13,7 @@ export function filterEventsBySearch(
 
    return events.filter((e) => {
       const venueName = 
-        venueMap[e.venue_id]?.toLowerCase() || "";
+        venueMap[e.venue_id]?.name.toLowerCase() || "";
 
       return [
         e.title, 

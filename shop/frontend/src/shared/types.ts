@@ -18,3 +18,8 @@ export type VenueType = {
     address: string;
     capacity: number;
 }
+
+export type CartItemType = {
+    event: EventType;
+    quantity: number;
+}

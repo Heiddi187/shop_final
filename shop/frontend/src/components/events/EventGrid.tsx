@@ -1,9 +1,9 @@
-import type { EventType } from "../../shared/types";
+import type { EventType, VenueType } from "../../shared/types";
 import { EventCard } from "./EventCard";
 
 type EventGridProps = {
    events: EventType[];
-   venueMap: Record<number, string>;
+   venueMap: Record<number, VenueType>;
    onViewEvent: (event: EventType) => void;
 };
 
@@ -14,7 +14,7 @@ export function EventGrid({ events, venueMap, onViewEvent }: EventGridProps) {
             <EventCard
                key={event.id}
                event={event}
-               venueName={venueMap[event.venue_id]}
+               venueName={venueMap[event.venue_id]?.name}
                onViewEvent={onViewEvent}
             />
          ))}

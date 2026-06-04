@@ -1,3 +1,5 @@
+// bæta við image, addressu og category
+
 import { Button } from "../ui/button";
 import {
    Dialog,
@@ -6,15 +8,16 @@ import {
    DialogHeader,
    DialogTitle,
 } from "../ui/dialog";
-import type { EventType } from "../../shared/types";
+import type { EventType, VenueType } from "../../shared/types";
+import { useCart } from "../../context/CartContext";
 
 type EventDialogProps = {
    event: EventType | null;
-   venueName?: string;
+   venue: VenueType | null;
    onClose: () => void;
 };
 
-export function EventDialog({ event, venueName, onClose }: EventDialogProps) {
+export function EventDialog({ event, venue, onClose }: EventDialogProps) {
    if (!event) {return null}
    
     const formattedDate = new Date(
@@ -24,6 +27,8 @@ export function EventDialog({ event, venueName, onClose }: EventDialogProps) {
         month: 'short',
         year: 'numeric'
     })
+
+    const { addToCart} = useCart();
 
    return (
       <Dialog
@@ -43,7 +48,7 @@ export function EventDialog({ event, venueName, onClose }: EventDialogProps) {
                      </DialogTitle>
 
                      <DialogDescription className="text-zinc-400">
-                        {venueName} - {event.city}
+                        {venue?.name} - {venue?.address}
                      </DialogDescription>
 
                      <div className="flex items-center justify-between py-6">
@@ -70,9 +75,9 @@ export function EventDialog({ event, venueName, onClose }: EventDialogProps) {
                   </DialogHeader>
 
                   <div className="space-y-6">
-                        <div className="h-32 rounded-xl bg-zinc-800">
+                        <div className="p-4 rounded-xl bg-zinc-800">
                             
-                            <p className="text-zinc-300">{event.description}</p>
+                            <p className="text-zinc-300 py-2 px-2">{event.description}</p>
                         </div>
                      
 
@@ -94,12 +99,12 @@ export function EventDialog({ event, venueName, onClose }: EventDialogProps) {
                             </p>
                             
                             <p className="text-md font-bold text-cyan-400">
-                              ${event.price}
+                              {event.price} kr.
                             </p>
                         </div>
                      </div>
 
-                     <Button>
+                     <Button className="" onClick={() => addToCart(event, quantity)}>
                         Add to Cart button here
                      </Button>
                   </div>

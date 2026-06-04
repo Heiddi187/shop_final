@@ -22,7 +22,7 @@ export function HomePage() {
    const venueNames = venues.map((venue) => venue.name);
    const [selectedVenue, setSelectedVenue] = useState("");
    const venueMap = Object.fromEntries(
-      venues.map((venue) => [venue.id, venue.name]),
+      venues.map((venue) => [venue.id, venue]),
    );
 
    const filteredEvents = events.filter((event) => {
@@ -32,7 +32,7 @@ export function HomePage() {
          selectedCategory === "" || event.category === selectedCategory;
 
       const matchVenue =
-         selectedVenue === "" || venueMap[event.venue_id] === selectedVenue;
+         selectedVenue === "" || venueMap[event.venue_id]?.name === selectedVenue;
 
       return matchCity && matchCategory && matchVenue;
    });
@@ -90,7 +90,11 @@ export function HomePage() {
             
             <EventDialog
                event={viewEvent}
-               venueName={viewEvent ? venueMap[viewEvent.venue_id] : ""}
+               venue={
+                  viewEvent
+                     ? venueMap[viewEvent.venue_id]
+                     : null
+               }
                onClose={() => setViewEvent(null)}
             />
          </div>
