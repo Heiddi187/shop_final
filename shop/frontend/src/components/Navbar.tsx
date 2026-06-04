@@ -1,3 +1,5 @@
+import CartHeader from "./cart/CartHeader";
+
 export function Navbar() {
    return (
       <header className="border-b border-zinc-800 bg-black">
@@ -29,6 +31,7 @@ export function Navbar() {
                <button className="btn-primary">
                   Sign Up
                </button>
+               <CartHeader />
             </div>
          </div>
       </header>

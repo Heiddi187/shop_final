@@ -1,6 +1,5 @@
 // bæta við image, addressu og category
 
-import { Button } from "../ui/button";
 import {
    Dialog,
    DialogContent,
