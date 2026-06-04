@@ -24,10 +24,10 @@ export function QuantitySelector({
     } 
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 ">
         <button
             onClick={decrease}
-            className="flex h-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800 text-lg font-bold hover:bg-zinc-700"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800 text-lg font-bold hover:bg-zinc-700"
         >
             -
         </button>
@@ -36,7 +36,7 @@ export function QuantitySelector({
         </span>
         <button
             onClick={increse}
-            className="flex h-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800 text-lg font-bold hover:bg-zinc-700"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800 text-lg font-bold hover:bg-zinc-700"
         >
             +
         </button>

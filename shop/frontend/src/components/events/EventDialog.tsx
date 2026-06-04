@@ -10,6 +10,8 @@ import {
 } from "../ui/dialog";
 import type { EventType, VenueType } from "../../shared/types";
 import { useCart } from "../../context/CartContext";
+import { useState } from "react";
+import { QuantitySelector } from "../QuantitySelector";
 
 type EventDialogProps = {
    event: EventType | null;
@@ -18,17 +20,21 @@ type EventDialogProps = {
 };
 
 export function EventDialog({ event, venue, onClose }: EventDialogProps) {
-   if (!event) {return null}
-   
-    const formattedDate = new Date(
-        event.event_date
-    ).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric'
-    })
+   if (!event) {
+      return null;
+   }
 
-    const { addToCart} = useCart();
+   const formattedDate = new Date(event.event_date).toLocaleDateString(
+      "en-GB",
+      {
+         day: "numeric",
+         month: "short",
+         year: "numeric",
+      },
+   );
+
+   const { addToCart } = useCart();
+   const [quantity, setQuantity] = useState(1);
 
    return (
       <Dialog
@@ -53,60 +59,62 @@ export function EventDialog({ event, venue, onClose }: EventDialogProps) {
 
                      <div className="flex items-center justify-between py-6">
                         <div>
-                           <p className="text-sm text-zinc-400">
-                              Date:
-                           </p>
-                     
-                           <p className="text-md font-bold">
-                              {formattedDate}
-                           </p>
+                           <p className="text-sm text-zinc-400">Date:</p>
+
+                           <p className="text-md font-bold">{formattedDate}</p>
                         </div>
 
                         <div>
-                            <p className="text-sm text-zinc-400">
-                                Duration:
-                            </p>
-                            
-                            <p className="text-md font-bold text-cyan-400">
+                           <p className="text-sm text-zinc-400">Duration:</p>
+
+                           <p className="text-md font-bold text-cyan-400">
                               {event.duration} min
-                            </p>
+                           </p>
                         </div>
                      </div>
                   </DialogHeader>
 
                   <div className="space-y-6">
-                        <div className="p-4 rounded-xl bg-zinc-800">
-                            
-                            <p className="text-zinc-300 py-2 px-2">{event.description}</p>
-                        </div>
-                     
-
+                     <div className="p-4 rounded-xl bg-zinc-800">
+                        <p className="text-zinc-300 py-2 px-2">
+                           {event.description}
+                        </p>
+                     </div>
 
                      <div className="flex items-center justify-between py-6">
                         <div>
                            <p className="text-sm text-zinc-400">
                               Tickets Left:
                            </p>
-                     
+
                            <p className="text-md font-bold">
                               {event.tix_available}
                            </p>
                         </div>
 
                         <div>
-                            <p className="text-sm text-zinc-400">
-                                Price:
-                            </p>
-                            
-                            <p className="text-md font-bold text-cyan-400">
+                           <p className="text-sm text-zinc-400">Price:</p>
+
+                           <p className="text-md font-bold text-cyan-400">
                               {event.price} kr.
-                            </p>
+                           </p>
                         </div>
                      </div>
 
-                     <Button className="" onClick={() => addToCart(event, quantity)}>
-                        Add to Cart button here
-                     </Button>
+                     <div className="flex gap-4">
+                        <QuantitySelector
+                           quantity={quantity}
+                           onChange={setQuantity}
+                           max={event.tix_available}
+                        />
+
+                        <button
+                           className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
+                           onClick={() => addToCart(event, quantity)}
+                        >
+                           Add Ticket{quantity > 1 ? "s" : ""} to Cart
+                        </button>
+                     </div>
                   </div>
                </>
             )}
