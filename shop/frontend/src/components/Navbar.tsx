@@ -10,8 +10,8 @@ export function Navbar() {
             </div>
 
             <nav className="hidden gap-8 text-sm text-zinc-300 md:flex">
-               <a href="#" className="transition-colors hover:text-cyan-400">
-                  Events
+               <a href="/" className="transition-colors hover:text-cyan-400">
+                  Home
                </a>
 
                <a href="#" className="transition-colors hover:text-cyan-400">

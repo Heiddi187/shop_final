@@ -109,7 +109,10 @@ export function EventDialog({ event, venue, onClose }: EventDialogProps) {
 
                         <button
                            className="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
-                           onClick={() => addToCart(event, quantity)}
+                           onClick={() => {
+                              addToCart(event, quantity);
+                              onClose();
+                           }}
                         >
                            Add Ticket{quantity > 1 ? "s" : ""} to Cart
                         </button>

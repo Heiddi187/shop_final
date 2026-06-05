@@ -19,18 +19,16 @@ const CartHeader = () => {
                   </span>
                )}
             </button>
-         {showDropdown && (
-             <div className="absolute right-0 mt-2 z-50 top-full">
-               <div>
-                  
+            {showDropdown && (
+               <div className="absolute right-0 mt-2 z-50 top-full">
+                  <div>
                      <CartDialog
                         onClose={() => setShowDropdown(false)}
                         open={true}
-                        />
-                  
+                     />
+                  </div>
                </div>
-            </div>
-         )}
+            )}
          </div>
       </>
    );
