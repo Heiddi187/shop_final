@@ -6,10 +6,12 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 export function CheckoutPage() {
    const { cart, clearCart } = useCart();
    const navigate = useNavigate();
+   const [paymentMethod, setPaymentMethod] = useState('creditcard')
 
    return (
       <>
@@ -64,6 +66,8 @@ export function CheckoutPage() {
                               </p>
                               <RadioGroup
                                  defaultValue="creditcard"
+                                 value={paymentMethod}
+                                 onValueChange={setPaymentMethod}
                                  className="w-fit mt-2"
                               >
                                  <div className="flex items-center gap-3">
@@ -77,21 +81,58 @@ export function CheckoutPage() {
                                     <RadioGroupItem
                                        value="compact"
                                        id="r3"
-                                       disabled
+                                       
                                     />
-                                    <Label htmlFor="r3">Paypal</Label>
+                                    <Label htmlFor="r3">Ponzi crypto (coming soon)</Label>
                                  </div>
                               </RadioGroup>
                            </div>
                         </CardFooter>
                      </Card>
 
+                     {paymentMethod === 'creditcard' && (
+                        <Card className="mt-6 text-white rounded-2xl border border-zinc-800 bg-zinc-800 transition-all hover:border-cyan-400">
+                           <CardContent>
+                           <div>
+                              <div className="grid gap-2">
+                                 <Label htmlFor="email">Name on card</Label>
+                                 <Input
+                                    id="nameOnCard"
+                                    type="text"
+                                    placeholder="Name"
+                                    required
+                                 />
+                              </div>
+                              <div className="mt-4 grid gap-2">
+                                 <Label htmlFor="email">Card Number</Label>
+                                 <Input
+                                    id="cardNumber"
+                                    type="text"
+                                    placeholder="1234-4567-8901-2345"
+                                    required
+                                 />
+                              </div>
+                              <div className="mt-4 grid gap-2">
+                                 <Label htmlFor="email">Exp. date</Label>
+                                 <Input
+                                    id="exp"
+                                    type="text"
+                                    placeholder="00/00"
+                                    required
+                                 />
+                              </div>
+                              <p className="mt-2">*For display purposes only</p>
+                           </div>
+                        </CardContent>
+                        </Card>
+                     )}
+
                      <button
                         disabled={cart.length === 0}
                         onClick={() => {
                            console.log(cart);
                            clearCart();
-                           navigate('/success'); // fara á staðfestingu fyrir kaupum
+                           navigate('/success'); 
                         }}
                         className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
                      >
