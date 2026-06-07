@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from './pages/HomePage'
 import { CheckoutPage } from "./pages/CheckoutPage";
+import { OrderCompletePage } from "./pages/OrderCompletePage";
 
 function App() {
    return (
@@ -17,6 +18,10 @@ function App() {
             <Route
                path="/checkout"
                element={<CheckoutPage />}
+            />
+            <Route
+               path="/success"
+               element={<OrderCompletePage />}
             />
          </Routes>
       </BrowserRouter>

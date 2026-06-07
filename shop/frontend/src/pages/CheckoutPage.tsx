@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { OrderSummaryCard } from "../components/OrderSummaryCard";
 import { Card, CardContent, CardFooter } from "../components/ui/card";
@@ -7,7 +8,8 @@ import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { useCart } from "../context/CartContext";
 
 export function CheckoutPage() {
-   const { cart } = useCart();
+   const { cart, clearCart } = useCart();
+   const navigate = useNavigate();
 
    return (
       <>
@@ -86,7 +88,11 @@ export function CheckoutPage() {
 
                      <button
                         disabled={cart.length === 0}
-                        onClick={() => console.log(cart)}
+                        onClick={() => {
+                           console.log(cart);
+                           clearCart();
+                           navigate('/success'); // fara á staðfestingu fyrir kaupum
+                        }}
                         className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
                      >
                         Complete Purchase
