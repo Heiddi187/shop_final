@@ -54,12 +54,12 @@ export function CartDialog({ onClose }: CartDialogProps) {
                      <p>Tickets: {itemCount}</p>
                   </div>
 
-                  <div className="space-y-2 border-t border-zinc-800 pt-4">
+                  <div className="text-lg font-semibold space-y-2 border-t border-zinc-800 pt-4">
                      <p>Total: {total} kr</p>
                   </div>
 
                   <button
-                     className="w-full rounded-xl border border-zinc-700 px-5 py-3 font-semibold bg-zinc-500"
+                     className="mt-4 w-full rounded-xl border border-zinc-700 px-5 py-3 font-semibold bg-zinc-500"
                      onClick={clearCart}
                   >
                      Clear cart
