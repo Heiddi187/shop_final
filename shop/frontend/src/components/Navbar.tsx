@@ -1,6 +1,11 @@
 import CartHeader from "./cart/CartHeader";
+import { useAuth } from "../auth/AuthContext";
 
 export function Navbar() {
+   const { login, isAuthenticated, logout, signup } = useAuth();
+   // console.log(login);
+   // console.log(isAuthenticated);
+
    return (
       <header className="border-b border-zinc-800 bg-black">
          <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -24,11 +29,26 @@ export function Navbar() {
             </nav>
 
             <div className="flex items-center gap-3">
-               <button className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800">
-                  Log In
-               </button>
+               {isAuthenticated ? (
+                  <button
+                     onClick={logout}
+                     className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
+                  >
+                     Logout
+                  </button>
+               ) : (
+                  <button
+                     onClick={() => login("new@mail.com", "newpass")}
+                     className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
+                  >
+                     Login
+                  </button>
+               )}
 
-               <button className="btn-primary">
+               <button
+                  onClick={() => signup("newy", "new@mail.com", "newpass")}
+                  className="btn-primary"
+               >
                   Sign Up
                </button>
                <CartHeader />
