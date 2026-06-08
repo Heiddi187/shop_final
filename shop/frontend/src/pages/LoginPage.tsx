@@ -31,37 +31,37 @@ export function LoginPage() {
                </CardHeader>
                <CardContent>
                   <div>
-                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                           id="email"
-                           type="email"
-                           placeholder="email@example.com"
-                           value={email}
-                           onChange={(e) => setEmail(e.target.value)}
-                           required
-                        />
-                     </div>
-                     <div className="grid gap-2 mt-4 ">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                           id="password"
-                           type="password"
-                           placeholder="password"
-                           value={password}
-                           onChange={(e) => setPassword(e.target.value)}
-                           required
-                        />
-                     </div>
-                  </div>
-                  <div>
                      <form onSubmit={handleSubmit}>
-                        <button
-                           type="submit"
-                           className="mt-6 btn-primary w-full"
-                        >
-                           Login
-                        </button>
+                        <div className="grid gap-2">
+                           <Label htmlFor="email">Email</Label>
+                           <Input
+                              id="email"
+                              type="email"
+                              placeholder="email@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              required
+                           />
+                        </div>
+                        <div className="grid gap-2 mt-4 ">
+                           <Label htmlFor="password">Password</Label>
+                           <Input
+                              id="password"
+                              type="password"
+                              placeholder="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              required
+                           />
+                        </div>
+                        <div>
+                           <button
+                              type="submit"
+                              className="mt-6 btn-primary w-full"
+                           >
+                              Login
+                           </button>
+                        </div>
                      </form>
                   </div>
                   <p className="mt-4 text-center text-sm text-zinc-400">

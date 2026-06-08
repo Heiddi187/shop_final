@@ -7,9 +7,11 @@ import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { useCart } from "../context/CartContext";
 import { useState } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 export function CheckoutPage() {
    const { cart, clearCart } = useCart();
+   const { isAuthenticated } = useAuth();
    const navigate = useNavigate();
    const [paymentMethod, setPaymentMethod] = useState('creditcard')
 
@@ -130,9 +132,12 @@ export function CheckoutPage() {
                      <button
                         disabled={cart.length === 0}
                         onClick={() => {
-                           console.log(cart);
+                           if (!isAuthenticated) {
+                              navigate('/login')
+                              return;
+                           }
                            clearCart();
-                           navigate('/success'); 
+                           navigate('/user'); 
                         }}
                         className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
                      >

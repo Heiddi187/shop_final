@@ -1,8 +1,10 @@
 import CartHeader from "./cart/CartHeader";
 import { useAuth } from "../auth/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Navbar() {
-   const { login, isAuthenticated, logout, signup } = useAuth();
+   const { isAuthenticated, logout } = useAuth();
+   const navigate = useNavigate();
    // console.log(login);
    // console.log(isAuthenticated);
 
@@ -15,42 +17,61 @@ export function Navbar() {
             </div>
 
             <nav className="hidden gap-8 text-sm text-zinc-300 md:flex">
-               <a href="/" className="transition-colors hover:text-cyan-400">
+               <Link 
+                  to="/" 
+                  className="transition-colors hover:text-cyan-400"
+               >
                   Home
-               </a>
+               </Link>
 
-               <a href="#" className="transition-colors hover:text-cyan-400">
+               <Link 
+                  to="/something" 
+                  className="transition-colors hover:text-cyan-400"
+               >
                   Something
-               </a>
+               </Link>
 
-               <a href="#" className="transition-colors hover:text-cyan-400">
+               <Link 
+                  to="/about" 
+                  className="transition-colors hover:text-cyan-400"
+               >
                   About
-               </a>
+               </Link>
             </nav>
 
             <div className="flex items-center gap-3">
                {isAuthenticated ? (
-                  <button
-                     onClick={logout}
-                     className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
-                  >
-                     Logout
-                  </button>
+                  <div className="space-x-3">
+                     <button
+                        onClick={logout}
+                        className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
+                     >
+                        Logout
+                     </button>
+                     <button
+                        onClick={() => navigate("/user")}
+                        className="btn-primary"
+                     >
+                        My Tickets
+                     </button>
+                  </div>
                ) : (
-                  <button
-                     onClick={() => login("new@mail.com", "newpass")}
-                     className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
-                  >
-                     Login
-                  </button>
+                  <div className="space-x-3">
+                     <button
+                        onClick={() => navigate("/login")}
+                        className="rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-2 text-sm font-medium text-white"
+                     >
+                        Login
+                     </button>
+                     <button
+                        onClick={() => navigate("/signup")}
+                        className="btn-primary"
+                     >
+                        Sign Up
+                     </button>
+                  </div>
                )}
 
-               <button
-                  onClick={() => signup("newy", "new@mail.com", "newpass")}
-                  className="btn-primary"
-               >
-                  Sign Up
-               </button>
                <CartHeader />
             </div>
          </div>
