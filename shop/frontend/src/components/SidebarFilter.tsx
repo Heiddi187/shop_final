@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 type SidebarFilterProps = {
    label: string;
