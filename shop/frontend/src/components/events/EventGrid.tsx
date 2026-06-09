@@ -8,9 +8,15 @@ type EventGridProps = {
 };
 
 export function EventGrid({ events, venueMap, onViewEvent }: EventGridProps) {
+   const today = new Date();
+
+   const upcomingEvents = events.filter(
+      (event) => new Date(event.event_date) >= today
+   );
+  
    return (
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-         {events.map((event) => (
+         {upcomingEvents.map((event) => (
             <EventCard
                key={event.id}
                event={event}
