@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 
 export function CheckoutPage() {
+   const API_URL = import.meta.env.VITE_API_URL;
    const { cart, clearCart } = useCart();
    const [error, setError] = useState("");
    const [isPurchasing, setIsPurchasing] = useState(false);
@@ -36,7 +37,7 @@ export function CheckoutPage() {
          setIsPurchasing(true);
 
          for (const item of cart) {
-            const res = await fetch("http://localhost:3000/api/tickets/buy", {
+            const res = await fetch(`${API_URL}/api/tickets/buy`, {
                method: "POST",
                headers: {
                   "Content-Type": "application/json",

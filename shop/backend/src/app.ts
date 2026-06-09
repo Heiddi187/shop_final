@@ -9,7 +9,7 @@ import cors from 'cors';
 export const createApp = () => {
     const app = express();
     
-    app.use(cors({origin: 'http://localhost:5173'}));
+    app.use(cors());
     
     app.use(express.json());
 

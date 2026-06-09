@@ -4,6 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 ////////////////////// Setup //////////////////////////////////////
+const API_URL = import.meta.env.VITE_API_URL;
 
 const mockUseCart = vi.fn();
 vi.mock("../context/CartContext", () => ({
@@ -192,12 +193,12 @@ describe("CheckoutPage.tsx", () => {
       );
 
       expect(mockFetch).toHaveBeenCalledWith(
-         "http://localhost:3000/api/tickets/buy",
+         `${API_URL}/api/tickets/buy`,
          expect.objectContaining({ method: "POST" }),
       );
 
       expect(mockFetch).toHaveBeenCalledWith(
-         "http://localhost:3000/api/tickets/buy",
+         `${API_URL}/api/tickets/buy`,
          expect.objectContaining({
             body: JSON.stringify({
                event_id: 69,

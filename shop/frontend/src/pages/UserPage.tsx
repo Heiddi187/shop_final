@@ -26,6 +26,7 @@ type UserTicketsResponse = {
 };
 
 export function UserPage() {
+   const API_URL = import.meta.env.VITE_API_URL;
    const { isAuthenticated, token } = useAuth();
    const [data, setData] = useState<UserTicketsResponse | null>(null);
    const [loading, setLoading] = useState<boolean>(true);
@@ -48,7 +49,7 @@ export function UserPage() {
          try {
             setLoading(true);
             const response = await fetch(
-               "http://localhost:3000/api/tickets/user",
+               `${API_URL}/api/tickets/user`,
                {
                   method: "GET",
                   headers: {
