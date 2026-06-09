@@ -6,6 +6,12 @@ import {
    useEffect,
    type ReactNode,
 } from "react";
+import {
+   addItemToCart,
+   updateCartQuantity,
+   removeItemFromCart,
+   emptyCart,
+} from "../components/cart/CartUtils";
 
 type CartContextValue = {
    cart: CartItemType[];
@@ -28,36 +34,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
    }, [cart]);
 
    const addToCart = (event: EventType, quantity: number) => {
-      setCart((prev) => {
-         const existing = prev.find((item) => item.event.id === event.id);
-         if (existing) {
-            return prev.map((item) =>
-               item.event.id === event.id
-                  ? { ...item, quantity: item.quantity + quantity }
-                  : item,
-            );
-         }
-         return [...prev, { event, quantity }];
-      });
+      setCart((prev) => 
+         addItemToCart(prev, event, quantity)
+      );
    };
 
    const updateQuantity = (eventId: number, quantity: number) => {
-      if (quantity <= 0) {
-         removeFromCart(eventId);
-         return;
-      }
       setCart((prev) =>
-         prev.map((item) =>
-            item.event.id === eventId ? { ...item, quantity } : item,
-         ),
+         updateCartQuantity(prev, eventId, quantity)
       );
    };
 
    const removeFromCart = (id: number) => {
-      setCart((prev) => prev.filter((item) => item.event.id !== id));
+      setCart((prev) => 
+         removeItemFromCart(prev, id)   
+      );
    };
 
-   const clearCart = () => setCart([]);
+   const clearCart = () => setCart(emptyCart());
 
    return (
       <CartContext.Provider

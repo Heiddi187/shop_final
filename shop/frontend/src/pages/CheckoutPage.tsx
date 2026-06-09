@@ -45,24 +45,6 @@ export function CheckoutPage() {
       } catch (error) {
          console.error(error);
       }
-
-      // return (
-      //    <button
-      //       disabled={cart.length === 0}
-      //       onClick={handlePurchase}
-      //       // onClick={() => {
-      //       //    if (!isAuthenticated) {
-      //       //       navigate("/login");
-      //       //       return;
-      //       //    }
-      //       //    clearCart();
-      //       //    navigate("/user");
-      //       // }}
-      //       className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
-      //    >
-      //       Complete Purchase
-      //    </button>
-      // );
    }
 
    return (
