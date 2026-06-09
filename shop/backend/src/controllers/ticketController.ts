@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { buyTicketModel, getUserDataModel, getUsersTicketsModel, oldTicketsExpireModel, returnTicketModel, ticketToReturnModel } from "../models/ticketModel";
-import { buyTicketSchema, getUserTicketSchema, ticketIdParamSchema } from "../schemas/ticket.schemas";
+import { buyTicketModel, getUserDataModel, getUsersTicketsModel, oldTicketsExpireModel, returnTicketModel, ticketToReturnModel } from "../models/ticketModel.js";
+import { buyTicketSchema, getUserTicketSchema, ticketIdParamSchema } from "../schemas/ticket.schemas.js";
 
 export const buyTicketsController = async (req: Request, res: Response, next: NextFunction) => {
     await oldTicketsExpireModel();

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getEventByIdController, getFilteredEventsController } from "../controllers/eventController";
-import { validateQuery } from "../middleware/zodSchemas";
-import { eventsQuerySchema } from "../schemas/event.schema";
+import { getEventByIdController, getFilteredEventsController } from "../controllers/eventController.js";
+import { validateQuery } from "../middleware/zodSchemas.js";
+import { eventsQuerySchema } from "../schemas/event.schema.js";
 
 const router = Router();
 

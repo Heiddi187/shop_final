@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllEventsByVenueController, getAllVenuesController, getVenueByIdController } from "../controllers/venueController";
+import { getAllEventsByVenueController, getAllVenuesController, getVenueByIdController } from "../controllers/venueController.js";
 
 const router = Router();
 

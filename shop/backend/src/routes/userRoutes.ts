@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { deleteUserController, getAllUsersController, loginController, signupController, updateUserController } from "../controllers/userController";
-import { authMiddleware } from "../middleware/jwt";
+import { deleteUserController, getAllUsersController, loginController, signupController, updateUserController } from "../controllers/userController.js";
+import { authMiddleware } from "../middleware/jwt.js";
 
 const router = Router();
 

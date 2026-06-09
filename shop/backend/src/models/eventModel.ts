@@ -1,5 +1,5 @@
-import db from '../config/db';
-import { EventsQuery } from '../schemas/event.schema';
+import db from '../config/db.js';
+import { EventsQuery } from '../schemas/event.schema.js';
 
 export const getAllEventsModel = async () => {
     return await db.any(`

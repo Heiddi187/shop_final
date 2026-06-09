@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { getAllEventsModel, getEventByIdModel, getFilteredEventsModel } from '../models/eventModel';
-import { EventsQuery, IdParamSchema } from "../schemas/event.schema";
+import { getAllEventsModel, getEventByIdModel, getFilteredEventsModel } from '../models/eventModel.js';
+import { EventsQuery, IdParamSchema } from "../schemas/event.schema.js";
 
 export const getAllEventsController = async (req: Request, res: Response, next: NextFunction) => {
     try {

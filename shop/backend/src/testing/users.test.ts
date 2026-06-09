@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 import request from "supertest";
-import { createApp } from "../app";
-import { resetTestDb } from "./setup";
-import db from '../config/db';
+import { createApp } from "../app.js";
+import { resetTestDb } from "./setup.js";
+import db from '../config/db.js';
 import jwt from 'jsonwebtoken';
 
 const app = createApp();

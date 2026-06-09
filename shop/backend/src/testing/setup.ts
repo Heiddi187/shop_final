@@ -1,5 +1,5 @@
 import fs from 'fs';
-import db from '../config/db';
+import db from '../config/db.js';
 
 export async function resetTestDb() {
     const tables = fs.readFileSync('src/sql/tables.sql', 'utf8');

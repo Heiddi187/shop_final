@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { getAllEventsByVenueModel, getAllVenuesModel, getVenueByIdModel } from "../models/venueModel";
-import { IdParamSchema } from "../schemas/venue.schema";
+import { getAllEventsByVenueModel, getAllVenuesModel, getVenueByIdModel } from "../models/venueModel.js";
+import { IdParamSchema } from "../schemas/venue.schema.js";
 
 export const getAllVenuesController = async (req: Request, res: Response, next: NextFunction) => {
     try {

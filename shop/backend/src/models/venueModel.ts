@@ -1,4 +1,4 @@
-import db from '../config/db';
+import db from '../config/db.js';
 
 export const getAllVenuesModel = async () => {
     return await db.any('SELECT * FROM venues ORDER BY id');

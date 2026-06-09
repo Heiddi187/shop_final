@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import { signinToken } from '../middleware/jwt';
-import * as users from '../models/userModel';
+import { signinToken } from '../middleware/jwt.js';
+import * as users from '../models/userModel.js';
 import { NextFunction, Request, Response } from 'express';
-import { loginSchema, signupSchema, updateUserSchema } from '../schemas/user.schema';
+import { loginSchema, signupSchema, updateUserSchema } from '../schemas/user.schema.js';
 
 export const getAllUsersController = async (req: Request, res: Response, next: NextFunction) => {
     const list = await users.getAllUsersModel();

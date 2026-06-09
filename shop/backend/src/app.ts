@@ -1,9 +1,9 @@
 import express from 'express';
-import { errorHandler } from './middleware/errorHandler';
-import eventRoutes from './routes/eventRoutes';
-import venueRoutes from './routes/venueRoutes';
-import userRoutes from './routes/userRoutes';
-import ticketRoutes from './routes/ticketRoutes';
+import { errorHandler } from './middleware/errorHandler.js';
+import eventRoutes from './routes/eventRoutes.js';
+import venueRoutes from './routes/venueRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import ticketRoutes from './routes/ticketRoutes.js';
 import cors from 'cors';
 
 export const createApp = () => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { tokenPayloadSchema } from '../schemas/user.schema';
+import { tokenPayloadSchema } from '../schemas/user.schema.js';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
