@@ -81,6 +81,12 @@ export function UserPage() {
    if (error) {
       return <p>Error: {error}</p>;
    }
+   const activeTickets =
+      data?.tickets.filter((ticket) => ticket.ticket_status === "bought") ?? [];
+   const activeEventTitles = activeTickets.map((ticket) => ticket.title);
+
+   const hasDuplicateActiveEvents =
+      new Set(activeEventTitles).size !== activeEventTitles.length;
 
    return (
       <>
@@ -95,9 +101,15 @@ export function UserPage() {
                      <p className="text-zinc-400">
                         Events Purchased: {data?.data.event_count}
                      </p>
+                     {hasDuplicateActiveEvents && (
+                        <p className="rounded-xl border border-yellow-500 bg-yellow-500/10 p-3 text-yellow-400">
+                           Warning: You have multiple active purchases for the
+                           same event.
+                        </p>
+                     )}
                      <p className="text-zinc-400">
-                        Total Spent: {data?.data.total_spent.toLocaleString('de-DE')}{" "}
-                        kr
+                        Total Spent:{" "}
+                        {data?.data.total_spent.toLocaleString("de-DE")} kr
                      </p>
                      {data?.tickets.map((ticket) => (
                         <TicketCard key={ticket.ticket_id} ticket={ticket} />

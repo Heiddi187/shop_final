@@ -11,9 +11,59 @@ import { useAuth } from "../auth/AuthContext";
 
 export function CheckoutPage() {
    const { cart, clearCart } = useCart();
-   const { isAuthenticated } = useAuth();
+   const { isAuthenticated, token } = useAuth();
    const navigate = useNavigate();
-   const [paymentMethod, setPaymentMethod] = useState('creditcard')
+   const [paymentMethod, setPaymentMethod] = useState("creditcard");
+
+   async function handlePurchase() {
+      try {
+         if (!isAuthenticated) {
+            navigate("/login");
+            return;
+         }
+
+         for (const item of cart) {
+            const res = await fetch("http://localhost:3000/api/tickets/buy", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+               },
+               body: JSON.stringify({
+                  event_id: item.event.id,
+                  quantity: item.quantity,
+               }),
+            });
+            if (!res.ok) {
+               throw new Error(`Purchase for ${item.event.title} failed`);
+            }
+         }
+
+         clearCart();
+         navigate("/user");
+
+      } catch (error) {
+         console.error(error);
+      }
+
+      // return (
+      //    <button
+      //       disabled={cart.length === 0}
+      //       onClick={handlePurchase}
+      //       // onClick={() => {
+      //       //    if (!isAuthenticated) {
+      //       //       navigate("/login");
+      //       //       return;
+      //       //    }
+      //       //    clearCart();
+      //       //    navigate("/user");
+      //       // }}
+      //       className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
+      //    >
+      //       Complete Purchase
+      //    </button>
+      // );
+   }
 
    return (
       <>
@@ -80,65 +130,58 @@ export function CheckoutPage() {
                                     <Label htmlFor="r2">Credit card</Label>
                                  </div>
                                  <div className="flex items-center gap-3">
-                                    <RadioGroupItem
-                                       value="compact"
-                                       id="r3"
-                                       
-                                    />
-                                    <Label htmlFor="r3">Ponzi crypto (coming soon)</Label>
+                                    <RadioGroupItem value="compact" id="r3" />
+                                    <Label htmlFor="r3">
+                                       Ponzi crypto (coming soon)
+                                    </Label>
                                  </div>
                               </RadioGroup>
                            </div>
                         </CardFooter>
                      </Card>
 
-                     {paymentMethod === 'creditcard' && (
+                     {paymentMethod === "creditcard" && (
                         <Card className="mt-6 text-white rounded-2xl border border-zinc-800 bg-zinc-800 transition-all hover:border-cyan-400">
                            <CardContent>
-                           <div>
-                              <div className="grid gap-2">
-                                 <Label htmlFor="email">Name on card</Label>
-                                 <Input
-                                    id="nameOnCard"
-                                    type="text"
-                                    placeholder="Name"
-                                    required
-                                 />
+                              <div>
+                                 <div className="grid gap-2">
+                                    <Label htmlFor="email">Name on card</Label>
+                                    <Input
+                                       id="nameOnCard"
+                                       type="text"
+                                       placeholder="Name"
+                                       required
+                                    />
+                                 </div>
+                                 <div className="mt-4 grid gap-2">
+                                    <Label htmlFor="email">Card Number</Label>
+                                    <Input
+                                       id="cardNumber"
+                                       type="text"
+                                       placeholder="1234-4567-8901-2345"
+                                       required
+                                    />
+                                 </div>
+                                 <div className="mt-4 grid gap-2">
+                                    <Label htmlFor="email">Exp. date</Label>
+                                    <Input
+                                       id="exp"
+                                       type="text"
+                                       placeholder="00/00"
+                                       required
+                                    />
+                                 </div>
+                                 <p className="mt-2">
+                                    *For display purposes only
+                                 </p>
                               </div>
-                              <div className="mt-4 grid gap-2">
-                                 <Label htmlFor="email">Card Number</Label>
-                                 <Input
-                                    id="cardNumber"
-                                    type="text"
-                                    placeholder="1234-4567-8901-2345"
-                                    required
-                                 />
-                              </div>
-                              <div className="mt-4 grid gap-2">
-                                 <Label htmlFor="email">Exp. date</Label>
-                                 <Input
-                                    id="exp"
-                                    type="text"
-                                    placeholder="00/00"
-                                    required
-                                 />
-                              </div>
-                              <p className="mt-2">*For display purposes only</p>
-                           </div>
-                        </CardContent>
+                           </CardContent>
                         </Card>
                      )}
 
                      <button
                         disabled={cart.length === 0}
-                        onClick={() => {
-                           if (!isAuthenticated) {
-                              navigate('/login')
-                              return;
-                           }
-                           clearCart();
-                           navigate('/user'); 
-                        }}
+                        onClick={handlePurchase}
                         className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
                      >
                         Complete Purchase
