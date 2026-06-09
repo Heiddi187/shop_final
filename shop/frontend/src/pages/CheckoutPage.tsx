@@ -6,7 +6,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
 import { useCart } from "../context/CartContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 
 export function CheckoutPage() {
@@ -15,13 +15,15 @@ export function CheckoutPage() {
    const navigate = useNavigate();
    const [paymentMethod, setPaymentMethod] = useState("creditcard");
 
-   async function handlePurchase() {
-      try {
-         if (!isAuthenticated) {
+   useEffect(() => {
+      if (!isAuthenticated) {
             navigate("/login");
             return;
          }
+   }, [isAuthenticated, navigate])
 
+   async function handlePurchase() {
+      try {
          for (const item of cart) {
             const res = await fetch("http://localhost:3000/api/tickets/buy", {
                method: "POST",
