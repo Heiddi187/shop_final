@@ -32,17 +32,41 @@ export function HomePage() {
          selectedCategory === "" || event.category === selectedCategory;
 
       const matchVenue =
-         selectedVenue === "" || venueMap[event.venue_id]?.name === selectedVenue;
+         selectedVenue === "" ||
+         venueMap[event.venue_id]?.name === selectedVenue;
 
       return matchCity && matchCategory && matchVenue;
    });
 
    const [searchQuery, setSearchQuery] = useState("");
+   const [sortBy, setSortBy] = useState("");
    const searchedEvents = filterEventsBySearch(
       filteredEvents,
       searchQuery,
       venueMap,
    );
+
+   const sortedEvents = [...searchedEvents].sort((a, b) => {
+      switch (sortBy) {
+         case "price":
+            return a.price - b.price;
+
+         case "duration":
+            return a.duration - b.duration;
+
+         case "price":
+            return (
+               new Date(a.event_date).getTime() -
+               new Date(b.event_date).getTime()
+            );
+
+         case "tickets":
+            return a.tix_available - b.tix_available;
+
+         default:
+            return 0;
+      }
+   });
 
    const [viewEvent, setViewEvent] = useState<EventType | null>(null);
 
@@ -68,7 +92,21 @@ export function HomePage() {
                   />
                }
             >
-               <h1 className="mb-6 text-4xl font-bold">Upcoming</h1>
+               <div className="mb-6 flex items-center justify-between">
+                  <h1 className="text-4xl font-bold">Upcoming</h1>
+
+                  <select
+                     value={sortBy}
+                     onChange={(e) => setSortBy(e.target.value)}
+                     className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2"
+                  >
+                     <option value="">Sort By</option>
+                     <option value="price">Price</option>
+                     <option value="duration">Duration</option>
+                     <option value="date">Date</option>
+                     <option value="tickets">Tickets Available</option>
+                  </select>
+               </div>
 
                {searchedEvents.length === 0 ? (
                   <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-12 text-center">
@@ -81,20 +119,16 @@ export function HomePage() {
                   </div>
                ) : (
                   <EventGrid
-                     events={searchedEvents}
+                     events={sortedEvents}
                      venueMap={venueMap}
                      onViewEvent={setViewEvent}
                   />
                )}
             </MainLayout>
-            
+
             <EventDialog
                event={viewEvent}
-               venue={
-                  viewEvent
-                     ? venueMap[viewEvent.venue_id]
-                     : null
-               }
+               venue={viewEvent ? venueMap[viewEvent.venue_id] : null}
                onClose={() => setViewEvent(null)}
             />
          </div>
