@@ -11,14 +11,17 @@ export function LoginPage() {
    const navigate = useNavigate();
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [error, setError] = useState("");
 
    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
       e.preventDefault();
+      setError("");
+
       try {
          await login(email, password);
          navigate("/");
-      } catch (error) {
-         alert("Invalid email or password");
+      } catch {
+         setError("Invalid email or password");
       }
    }
 
@@ -54,6 +57,11 @@ export function LoginPage() {
                               required
                            />
                         </div>
+
+                        {error && (
+                           <p className="mt-4 text-sm text-red-500">{error}</p>
+                        )}
+
                         <div>
                            <button
                               type="submit"

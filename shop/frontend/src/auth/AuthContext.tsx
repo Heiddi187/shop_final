@@ -41,10 +41,6 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
    };
 
    const login = async (email: string, password: string) => {
-    // console.log("Attempting login", {
-    //     email, password
-    // })
-
       const res = await fetch("http://localhost:3000/api/users/login", {
          method: "POST",
          headers: {
