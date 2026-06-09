@@ -11,19 +11,30 @@ import { useAuth } from "../auth/AuthContext";
 
 export function CheckoutPage() {
    const { cart, clearCart } = useCart();
+   const [error, setError] = useState("");
+   const [isPurchasing, setIsPurchasing] = useState(false);
    const { isAuthenticated, token } = useAuth();
    const navigate = useNavigate();
    const [paymentMethod, setPaymentMethod] = useState("creditcard");
 
    useEffect(() => {
       if (!isAuthenticated) {
-            navigate("/login");
-            return;
-         }
-   }, [isAuthenticated, navigate])
+         navigate("/login");
+         return;
+      }
+   }, [isAuthenticated, navigate]);
 
    async function handlePurchase() {
+      setError("");
+
+      if (!token) {
+         setError("Authentication error. Please log in again.");
+         return;
+      }
+
       try {
+         setIsPurchasing(true);
+
          for (const item of cart) {
             const res = await fetch("http://localhost:3000/api/tickets/buy", {
                method: "POST",
@@ -36,6 +47,7 @@ export function CheckoutPage() {
                   quantity: item.quantity,
                }),
             });
+
             if (!res.ok) {
                throw new Error(`Purchase for ${item.event.title} failed`);
             }
@@ -43,9 +55,10 @@ export function CheckoutPage() {
 
          clearCart();
          navigate("/user");
-
       } catch (error) {
-         console.error(error);
+         setError(error instanceof Error ? error.message : "Purchase failed.");
+      } finally {
+         setIsPurchasing(false);
       }
    }
 
@@ -162,13 +175,16 @@ export function CheckoutPage() {
                            </CardContent>
                         </Card>
                      )}
+                     {error && (
+                        <p className="mt-4 text-sm text-red-500">{error}</p>
+                     )}
 
                      <button
-                        disabled={cart.length === 0}
+                        disabled={cart.length === 0 || isPurchasing}
                         onClick={handlePurchase}
                         className="mt-6 w-full rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-black transition-colors hover:bg-cyan-300"
                      >
-                        Complete Purchase
+                        {isPurchasing ? "Processing..." : "Complete Purchase"}
                      </button>
                   </div>
 
