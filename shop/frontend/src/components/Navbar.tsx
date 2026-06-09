@@ -25,14 +25,14 @@ export function Navbar() {
                </Link>
 
                <Link 
-                  to="/something" 
+                  to="/" 
                   className="transition-colors hover:text-cyan-400"
                >
                   Something
                </Link>
 
                <Link 
-                  to="/about" 
+                  to="/" 
                   className="transition-colors hover:text-cyan-400"
                >
                   About
