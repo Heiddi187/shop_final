@@ -60,7 +60,7 @@ export function EventDialog({ event, venue, onClose }: EventDialogProps) {
                         <div>
                            <p className="text-sm text-zinc-400">Date:</p>
 
-                           <p className="text-md font-bold">{formattedDate}</p>
+                           <p className="text-md font-bold">{formattedDate} at {event.event_time.slice(0, 5)}</p>
                         </div>
 
                         <div>

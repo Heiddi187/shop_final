@@ -23,7 +23,7 @@ export function CartDialog({ onClose }: CartDialogProps) {
 
          <div>
             {cart.length === 0 ? (
-               <p>Your cart is empty</p>
+               <p className="text-sm mt-2">Your cart is empty</p>
             ) : (
                <>
                   <ul>
