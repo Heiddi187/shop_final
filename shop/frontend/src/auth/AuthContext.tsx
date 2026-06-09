@@ -11,13 +11,14 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthContextProvider({ children }: { children: ReactNode }) {
+   const API_URL = import.meta.env.VITE_API_URL
    const [token, setToken] = useState<string | null>(
       localStorage.getItem("token"),
    );
    const isAuthenticated = !!token;
 
    const signup = async (name:string, email: string, password: string) => {
-      const res = await fetch("http://localhost:3000/api/users/signup", {
+      const res = await fetch(`${API_URL}/api/users/signup`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
    };
 
    const login = async (email: string, password: string) => {
-      const res = await fetch("http://localhost:3000/api/users/login", {
+      const res = await fetch(`${API_URL}/api/users/login`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
