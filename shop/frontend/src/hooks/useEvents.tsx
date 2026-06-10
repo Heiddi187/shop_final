@@ -11,7 +11,6 @@ export function useEvents() {
       const fetchEvents = async () => {
          try {
             const data = await getEvents();
-            // console.log(data);
             setEvents(data);
          } catch (err) {
             const message =

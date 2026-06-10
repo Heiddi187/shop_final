@@ -48,7 +48,7 @@ export function TicketCard({ ticket }: TicketCardProps) {
          </div>
          {ticket.ticket_status === 'bought' && (
             <button className="mt-2 rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-semibold text-red-400 transition-colors hover:border-red-500 hover:bg-zinc-700">
-                Return Ticket Does noting
+                Return Ticket (Not Implemented)
             </button>
          )}
       </div>

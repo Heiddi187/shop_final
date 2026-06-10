@@ -8,9 +8,9 @@ import { AuthContextProvider } from "./auth/AuthContext.tsx";
 createRoot(document.getElementById("root")!).render(
    <StrictMode>
       <AuthContextProvider>
-      <CartProvider>
-         <App />
-      </CartProvider>
+         <CartProvider>
+            <App />
+         </CartProvider>
       </AuthContextProvider>
    </StrictMode>,
 );

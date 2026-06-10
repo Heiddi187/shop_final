@@ -3,8 +3,6 @@ import { useAuth } from "../auth/AuthContext";
 import { Navbar } from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { TicketCard } from "../components/tickets/TicketCard";
-// import { useCart } from "../context/CartContext";
-// import { useState } from "react";
 
 type Ticket = {
    ticket_id: number;

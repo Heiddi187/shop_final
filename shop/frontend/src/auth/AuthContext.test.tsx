@@ -56,7 +56,7 @@ describe("AuthContext.tsx", () => {
       expect(screen.getByText("Logged In")).toBeInTheDocument();
 
       expect(mockFetch).toHaveBeenCalledWith(
-         "http://localhost:3000/api/users/login",
+         expect.stringContaining("/api/users/login"),
          expect.objectContaining({
             method: "POST",
          }),

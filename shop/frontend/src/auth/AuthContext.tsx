@@ -53,15 +53,11 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
          }),
       });
 
-    //   console.log("status:", res.status);
-
       if (!res.ok) {
          throw new Error("Login failed");
       }
 
       const data = await res.json();
-
-    //   console.log(data)
 
       localStorage.setItem("token", data.token);
 

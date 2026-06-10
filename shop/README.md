@@ -1,75 +1,336 @@
-# React + TypeScript + Vite
+# TicketHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack event ticketing application built with React, TypeScript, Express, and PostgreSQL.
 
-Currently, two official plugins are available:
+Users can browse upcoming events, purchase tickets, and view their purchased tickets through a personal account system using JWT authentication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### User Features
 
-Note: This will impact Vite dev & build performances.
+* Browse upcoming events
+* Filter events by:
 
-## Expanding the ESLint configuration
+  * City
+  * Category
+  * Venue
+  * Search term
+* View event details
+* Create an account
+* Login / Logout
+* Purchase tickets
+* View purchased tickets
+* Track total spending and purchased events
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Technical Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* React + TypeScript frontend
+* Express + TypeScript backend
+* PostgreSQL database
+* JWT authentication
+* Protected API routes
+* Railway PostgreSQL hosting
+* Railway backend deployment
+* Vercel frontend deployment
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+### Frontend
+
+* React
+* TypeScript
+* Vite
+* React Router
+* Context API
+* Tailwind CSS
+* Shadcn UI
+
+### Backend
+
+* Node.js
+* Express
+* TypeScript
+* pg-promise
+* JWT
+* bcrypt
+
+### Database
+
+* PostgreSQL
+
+### Deployment
+
+* Vercel (Frontend)
+* Railway (Backend + PostgreSQL)
+
+---
+
+## Project Structure
+
+```text
+shop/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── server.ts
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── auth/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   └── shared/
+│   └── package.json
+│
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Local Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+Install:
+
+* Node.js (v20 or newer recommended)
+* PostgreSQL
+* Git
+
+---
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Heiddi187/shop_final.git
+cd shop_final
 ```
+
+---
+
+## Backend Setup
+
+Navigate to backend:
+
+```bash
+cd backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=3000
+
+PGHOST=localhost
+PGPORT=5432
+PGDATABASE=tickethub
+PGUSER=postgres
+PGPASSWORD=your_password
+
+JWT_SECRET=your_secret_key
+```
+
+Run the backend:
+
+```bash
+npm run dev
+```
+
+Expected output:
+
+```text
+Connected to PostgreSQL database
+Server is running on: 3000
+```
+
+---
+
+## Database Setup
+
+Create a PostgreSQL database.
+
+Run the SQL schema and seed files included in the project to create:
+
+* users
+* venues
+* events
+* tickets
+
+tables.
+
+---
+
+## Frontend Setup
+
+Open a second terminal:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+Run the frontend:
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Production Deployment
+
+### Backend (Railway)
+
+The backend is deployed on Railway.
+
+Required environment variables:
+
+```env
+DATABASE_URL=<railway_database_url>
+JWT_SECRET=<jwt_secret>
+PORT=8080
+```
+
+Railway automatically provides:
+
+```env
+DATABASE_URL
+```
+
+which is used by the application for database connectivity.
+
+---
+
+### Frontend (Vercel)
+
+The frontend is deployed on Vercel.
+
+Required environment variable:
+
+```env
+VITE_API_URL=https://your-railway-backend-url.up.railway.app
+```
+
+Example:
+
+```env
+VITE_API_URL=https://shopfinal-production.up.railway.app
+```
+
+---
+
+## API Endpoints
+
+### Events
+
+```http
+GET /api/events
+GET /api/events/:id
+```
+
+### Venues
+
+```http
+GET /api/venues
+```
+
+### Users
+
+```http
+POST /api/users/signup
+POST /api/users/login
+```
+
+### Tickets
+
+```http
+POST /api/tickets/buy
+GET /api/tickets/user
+```
+
+---
+
+## Authentication
+
+Authentication is handled using JSON Web Tokens (JWT).
+
+Protected routes require:
+
+```http
+Authorization: Bearer <token>
+```
+
+The token is issued upon successful login and stored client-side.
+
+---
+
+## Testing
+
+Frontend tests can be run with:
+
+```bash
+npm test
+```
+
+or
+
+```bash
+npm run test
+```
+
+depending on environment configuration.
+
+---
+
+## Future Improvements
+
+* Ticket return/refund functionality
+* Admin dashboard
+* Event creation interface
+* User profile management
+* Image upload support
+* Payment gateway integration
+* Email confirmations
+
+---
+
+## Author
+
+**Heiðar Hlöðversson**
+
+Final project developed as part of a full-stack web development program.

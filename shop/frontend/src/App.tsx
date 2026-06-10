@@ -5,6 +5,7 @@ import { OrderCompletePage } from "./pages/OrderCompletePage";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { UserPage } from "./pages/UserPage";
+import { AboutPage } from "./pages/AboutPage";
 
 function App() {
    return (
@@ -16,7 +17,7 @@ function App() {
             />
             <Route
                path="/about"
-               // element={<AboutPage />}
+               element={<AboutPage />}
             />
             <Route
                path="/checkout"
